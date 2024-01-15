@@ -47,6 +47,7 @@ namespace FormsSQLServer {
 	private: System::Windows::Forms::TextBox^ tbPassword;
 	private: System::Windows::Forms::Button^ btnOk;
 	private: System::Windows::Forms::Button^ btnCancel;
+	private: System::Windows::Forms::Label^ tbPw;
 
 
 	protected:
@@ -55,7 +56,7 @@ namespace FormsSQLServer {
 		/// <summary>
 		/// Variabile di progettazione necessaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -71,6 +72,7 @@ namespace FormsSQLServer {
 			this->tbPassword = (gcnew System::Windows::Forms::TextBox());
 			this->btnOk = (gcnew System::Windows::Forms::Button());
 			this->btnCancel = (gcnew System::Windows::Forms::Button());
+			this->tbPw = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// login
@@ -99,7 +101,13 @@ namespace FormsSQLServer {
 			this->tbEmail->Name = L"tbEmail";
 			this->tbEmail->Size = System::Drawing::Size(391, 44);
 			this->tbEmail->TabIndex = 2;
-			
+			// 
+			// cancel
+			// 
+			this->cancel->Location = System::Drawing::Point(0, 0);
+			this->cancel->Name = L"cancel";
+			this->cancel->Size = System::Drawing::Size(100, 23);
+			this->cancel->TabIndex = 7;
 			// 
 			// tbPassword
 			// 
@@ -129,12 +137,22 @@ namespace FormsSQLServer {
 			this->btnCancel->UseVisualStyleBackColor = true;
 			this->btnCancel->Click += gcnew System::EventHandler(this, &LoginForm::btnCancel_Click);
 			// 
+			// tbPw
+			// 
+			this->tbPw->AutoSize = true;
+			this->tbPw->Location = System::Drawing::Point(20, 119);
+			this->tbPw->Name = L"tbPw";
+			this->tbPw->Size = System::Drawing::Size(158, 37);
+			this->tbPw->TabIndex = 8;
+			this->tbPw->Text = L"Password";
+			// 
 			// LoginForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(19, 37);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->ClientSize = System::Drawing::Size(587, 311);
+			this->Controls->Add(this->tbPw);
 			this->Controls->Add(this->btnCancel);
 			this->Controls->Add(this->btnOk);
 			this->Controls->Add(this->tbPassword);
@@ -166,7 +184,7 @@ namespace FormsSQLServer {
 		if (email->Length == 0 || password->Length == 0) {
 			MessageBox::Show("Inserire email e password", "Errore email o pw"
 				, MessageBoxButtons::OK);
-				return;
+			return;
 		}
 
 		try {
@@ -193,7 +211,7 @@ namespace FormsSQLServer {
 			}
 			else {
 				MessageBox::Show("Email o password non corretti",
-					"email o pw non corretti", MessageBoxButtons::OK);
+					"errore email o pw", MessageBoxButtons::OK);
 			}
 		}
 		catch (Exception^ e) {
@@ -201,5 +219,5 @@ namespace FormsSQLServer {
 				"Errore conn DB", MessageBoxButtons::OK);
 		}
 	}
-};
+	};
 }
