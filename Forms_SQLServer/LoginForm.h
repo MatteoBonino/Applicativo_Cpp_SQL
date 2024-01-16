@@ -215,7 +215,7 @@ namespace FormsSQLServer {
 			}
 		}
 		catch (Exception^ e) {
-			MessageBox::Show("Impossibile connettersi al databse",
+			MessageBox::Show("Impossibile connettersi al database",
 				"Errore conn DB", MessageBoxButtons::OK);
 		}
 	}
