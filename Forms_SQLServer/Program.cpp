@@ -1,4 +1,6 @@
 #include "LoginForm.h"
+#include "MainForm.h"
+#include "RegisterForm.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -7,13 +9,34 @@ void main(array<String^>^ args)
 {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	FormsSQLServer::LoginForm loginForm;
-	loginForm.ShowDialog();
-	User^ user = loginForm.user;
+
+	User^ user = nullptr;
+	while (true) {
+		FormsSQLServer::LoginForm loginForm;
+		loginForm.ShowDialog();
+
+		if (loginForm.switchToRegister) {
+			FormsSQLServer::RegisterForm registerForm;
+			registerForm.ShowDialog();
+
+			if (registerForm.swithcToLogin) {
+
+				continue;
+			}
+			else {
+				user = loginForm.user;
+				break;
+			}
+		}
+		else {
+			user = loginForm.user;
+			break;
+		}
+	}
 
 	if (user != nullptr) {
-		MessageBox::Show("Autenticazione effettuata da parte di " + user->name,
-			"Program.cpp", MessageBoxButtons::OK);
+		FormsSQLServer::MainForm mainForm(user);
+		Application::Run(% mainForm);
 	}
 	else {
 		MessageBox::Show("Autenticazione fallita",

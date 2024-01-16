@@ -48,6 +48,8 @@ namespace FormsSQLServer {
 	private: System::Windows::Forms::Button^ btnOk;
 	private: System::Windows::Forms::Button^ btnCancel;
 	private: System::Windows::Forms::Label^ tbPw;
+	private: System::Windows::Forms::LinkLabel^ llRegister;
+
 
 
 	protected:
@@ -73,6 +75,7 @@ namespace FormsSQLServer {
 			this->btnOk = (gcnew System::Windows::Forms::Button());
 			this->btnCancel = (gcnew System::Windows::Forms::Button());
 			this->tbPw = (gcnew System::Windows::Forms::Label());
+			this->llRegister = (gcnew System::Windows::Forms::LinkLabel());
 			this->SuspendLayout();
 			// 
 			// login
@@ -146,12 +149,24 @@ namespace FormsSQLServer {
 			this->tbPw->TabIndex = 8;
 			this->tbPw->Text = L"Password";
 			// 
+			// llRegister
+			// 
+			this->llRegister->AutoSize = true;
+			this->llRegister->Location = System::Drawing::Point(440, 285);
+			this->llRegister->Name = L"llRegister";
+			this->llRegister->Size = System::Drawing::Size(134, 37);
+			this->llRegister->TabIndex = 9;
+			this->llRegister->TabStop = true;
+			this->llRegister->Text = L"Register";
+			this->llRegister->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &LoginForm::llRegister_LinkClicked);
+			// 
 			// LoginForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(19, 37);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::ActiveCaption;
-			this->ClientSize = System::Drawing::Size(587, 311);
+			this->ClientSize = System::Drawing::Size(595, 394);
+			this->Controls->Add(this->llRegister);
 			this->Controls->Add(this->tbPw);
 			this->Controls->Add(this->btnCancel);
 			this->Controls->Add(this->btnOk);
@@ -182,13 +197,13 @@ namespace FormsSQLServer {
 		String^ password = this->tbPassword->Text;
 
 		if (email->Length == 0 || password->Length == 0) {
-			MessageBox::Show("Inserire email e password", "Errore email o pw"
+			MessageBox::Show("Inserire email e password", "Errore campi vuoti"
 				, MessageBoxButtons::OK);
 			return;
 		}
 
 		try {
-			String^ connString = "Data Source=desktop-otmm446;Initial Catalog=formssqlserver";
+			String^ connString = "Data Source=DESKTOP-OTMM446;Initial Catalog=Forms_SQLServer;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 			SqlConnection sqlConn(connString);
 			sqlConn.Open();
 
@@ -214,10 +229,18 @@ namespace FormsSQLServer {
 					"errore email o pw", MessageBoxButtons::OK);
 			}
 		}
-		catch (Exception^ e) {
+		catch (Exception^ ex) {
 			MessageBox::Show("Impossibile connettersi al database",
 				"Errore conn DB", MessageBoxButtons::OK);
 		}
 	}
-	};
+
+	public: bool switchToRegister = false;
+
+	private: System::Void llRegister_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e) {
+	
+		this->switchToRegister = true;
+		this->Close();
+	}
+};
 }
